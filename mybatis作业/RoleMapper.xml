@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="day.daymybatis.RoleMapper">
+    <!-- 配置查询到的列与实体类属性的映射 -->
+    <resultMap id="roleinfo" type="role">
+        <!-- id表示是主键 property从类中来,为类中属性 cloum从查询中来,为查询的列名-->
+        <id property="id" column="id"></id>
+        <result property="roleName" column="role_name"></result>
+        <result property="note" column="note"></result>
+    </resultMap>
+    <!-- resultMap结果映射可以自己配置属性和列的映射
+         resultMap="roleinfo"
+         resultType结果根据列名与属性名是否相同进行映射，相同则映射，否则就无法映射
+         resultType="day.daymybatis.Role"
+         不能同时出现
+    -->
+    <select id="findAllRole" resultMap="roleinfo">
+        select * from t_role
+    </select>
+    <select id="findRoleById" resultMap="roleinfo">
+        select * from t_role where id=#{id}
+    </select>
+    <insert id="insertRole" parameterType="role">
+        insert into t_role values (null,#{roleName},#{note})
+    </insert>
+    <update id="updateRole" parameterType="role">
+        update t_role set role_name=#{roleName},note=#{note} where id=#{id}
+    </update>
+    <delete id="deleteById">
+        delete from t_role where id=#{id}
+    </delete>
+</mapper>
+
